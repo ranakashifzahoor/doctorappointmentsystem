@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prescrip — Preview &amp; Sign in</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%235f6fff'/%3E%3Cpath d='M22 46V18h12a9 9 0 0 1 0 18h-5v10z' fill='%23fff'/%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --primary: #5f6fff;
+        --ink: #1f2937;
+        --muted: #6b7280;
+        --line: #e5e7eb;
+      }
+      * { box-sizing: border-box; font-family: 'Outfit', system-ui, sans-serif; }
+      body { margin: 0; background: #f6f7fb; color: var(--ink); }
+
+      header {
+        background: linear-gradient(120deg, #5f6fff, #7f8cff);
+        color: #fff;
+        padding: 34px 24px 30px;
+      }
+      .wrap { max-width: 900px; margin: 0 auto; }
+      .brand { display: flex; align-items: center; gap: 12px; }
+      .logo {
+        width: 40px; height: 40px; border-radius: 12px; background: rgba(255,255,255,.2);
+        display: grid; place-items: center; font-weight: 700; font-size: 18px;
+      }
+      h1 { font-size: 22px; margin: 18px 0 6px; font-weight: 600; }
+      header p { margin: 0; color: #e6e9ff; font-size: 14px; max-width: 620px; }
+      .links { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+      .links a {
+        color: #fff; text-decoration: none; font-size: 13px; border: 1px solid rgba(255,255,255,.45);
+        padding: 8px 14px; border-radius: 999px;
+      }
+      .links a:hover { background: rgba(255,255,255,.15); }
+
+      main { max-width: 900px; margin: -18px auto 60px; padding: 0 24px; }
+      .grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+      .card {
+        background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 22px;
+        box-shadow: 0 6px 20px rgba(17, 24, 39, .05);
+      }
+      .card h2 { margin: 0 0 4px; font-size: 17px; }
+      .card .role { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--primary); font-weight: 600; }
+      .card p.hint { color: var(--muted); font-size: 13px; margin: 6px 0 14px; }
+      label { display: block; font-size: 12px; font-weight: 500; color: #4b5563; margin: 10px 0 4px; }
+      input {
+        width: 100%; padding: 11px 12px; border: 1px solid #d1d5db; border-radius: 10px; font-size: 14px; outline: none;
+      }
+      input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(95,111,255,.14); }
+      button {
+        width: 100%; margin-top: 14px; padding: 12px; border: 0; border-radius: 999px; cursor: pointer;
+        background: var(--primary); color: #fff; font-size: 14px; font-weight: 500;
+      }
+      button:hover { background: #4c5ce0; }
+      button[disabled] { opacity: .6; cursor: not-allowed; }
+      .msg { font-size: 12.5px; margin-top: 10px; min-height: 16px; }
+      .ok { color: #15803d; }
+      .err { color: #dc2626; }
+      .demo { font-size: 12px; color: var(--muted); margin-top: 12px; border-top: 1px dashed var(--line); padding-top: 10px; }
+      .demo code { background: #f3f4f6; padding: 1px 5px; border-radius: 5px; }
+      .status { font-size: 12.5px; color: var(--muted); margin-bottom: 8px; }
+      a.inline { color: var(--primary); }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="wrap">
+        <div class="brand">
+          <div class="logo">P</div>
+          <div>
+            <div style="font-size:18px;font-weight:600">Prescrip</div>
+            <div style="font-size:12.5px;color:#e6e9ff">Doctor Appointment Booking Platform</div>
+          </div>
+        </div>
+        <h1>Sign in — Patient &amp; Doctor</h1>
+        <p>
+          This launcher talks to the running API and hands your session to the right app.
+          Patient website on <strong>5173</strong>, Doctor panel on <strong>5174</strong>,
+          API on <strong>4000</strong>.
+        </p>
+        <div class="links">
+          <a href="http://localhost:5173" target="_blank" rel="noreferrer">Patient website ↗</a>
+          <a href="http://localhost:5174/doctor/login" target="_blank" rel="noreferrer">Doctor panel ↗</a>
+          <a href="http://localhost:5174/doctor/signup" target="_blank" rel="noreferrer">Doctor sign-up ↗</a>
+          <a href="http://localhost:4000/api/health" target="_blank" rel="noreferrer">API health ↗</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="status" id="apiStatus">Checking API…</div>
+      <div class="grid">
+        <!-- PATIENT -->
+        <section class="card" data-role="patient">
+          <div class="role">Patient</div>
+          <h2>Patient login</h2>
+          <p class="hint">Book appointments, pay online and manage visits.</p>
+          <label>Email</label>
+          <input type="email" class="email" placeholder="patient@example.com" />
+          <label>Password</label>
+          <input type="password" class="password" placeholder="••••••••" />
+          <button data-login="/api/user/login" data-target="http://localhost:5173/login">Login as patient</button>
+          <div class="msg"></div>
+          <div class="demo">Demo: <code>patient@example.com</code> / <code>patient1234</code></div>
+        </section>
+
+        <!-- DOCTOR -->
+        <section class="card" data-role="doctor">
+          <div class="role">Doctor</div>
+          <h2>Doctor login</h2>
+          <p class="hint">View appointments, earnings and your profile.</p>
+          <label>Email</label>
+          <input type="email" class="email" placeholder="emily.carter@prescrip.com" />
+          <label>Password</label>
+          <input type="password" class="password" placeholder="••••••••" />
+          <button data-login="/api/doctor/login" data-target="http://localhost:5174/doctor/dashboard">Login as doctor</button>
+          <div class="msg"></div>
+          <div class="demo">Demo: <code>emily.carter@prescrip.com</code> / <code>doctor1234</code></div>
+          <div class="demo" style="border-top:0;padding-top:0">
+            New here? <a class="inline" href="http://localhost:5174/doctor/signup" target="_blank" rel="noreferrer">Sign up as doctor ↗</a>
+          </div>
+        </section>
+      </div>
+      <p class="status" style="margin-top:18px">
+        Tip: inside each app you can also switch roles from the login screen. Pressing a login button
+        stores the token for the target app and opens it.
+      </p>
+    </main>
+
+    <script>
+      const API = 'http://localhost:4000'
+      const statusEl = document.getElementById('apiStatus')
+
+      fetch(API + '/api/health')
+        .then((r) => r.json())
+        .then((j) => {
+          const p = j.data?.payment || {}
+          const methods = (p.methods || []).map((m) => m.label).join(' · ')
+          statusEl.textContent =
+            `API online — payments: ${p.demo ? 'demo mode' : 'live'} (${p.currency}) · ${methods || 'no methods'}`
+        })
+        .catch(() => {
+          statusEl.textContent = 'API offline — start the backend (npm run dev in /backend).'
+          statusEl.style.color = '#dc2626'
+        })
+
+      document.querySelectorAll('button[data-login]').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          const card = btn.closest('.card')
+          const email = card.querySelector('.email').value.trim()
+          const password = card.querySelector('.password').value
+          const msg = card.querySelector('.msg')
+          msg.className = 'msg'
+          msg.textContent = 'Signing in…'
+          btn.disabled = true
+          try {
+            const res = await fetch(API + btn.dataset.login, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ email, password }),
+            })
+            const data = await res.json()
+            if (!data.success) throw new Error(data.message || 'Login failed')
+            msg.className = 'msg ok'
+            msg.textContent = 'Success — opening the app…'
+            const token = data.data.token
+            const target = new URL(btn.dataset.target)
+            target.searchParams.set('token', token)
+            setTimeout(() => window.open(target.toString(), '_blank'), 250)
+          } catch (e) {
+            msg.className = 'msg err'
+            msg.textContent = e.message
+          } finally {
+            btn.disabled = false
+          }
+        })
+      })
+    </script>
+  </body>
+</html>

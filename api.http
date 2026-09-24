@@ -1,0 +1,52 @@
+@host = http://localhost:4000
+@userToken = paste-user-jwt-here
+@doctorToken = paste-doctor-jwt-here
+@adminToken = paste-admin-jwt-here
+
+### Health
+GET {{host}}/api/health
+
+### Register patient
+POST {{host}}/api/user/register
+Content-Type: application/json
+
+{ "name": "Test Patient", "email": "test@example.com", "password": "secret1234" }
+
+### Login patient
+POST {{host}}/api/user/login
+Content-Type: application/json
+
+{ "email": "patient@example.com", "password": "patient1234" }
+
+### Public doctor list
+GET {{host}}/api/doctor/list
+
+### Doctor login
+POST {{host}}/api/doctor/login
+Content-Type: application/json
+
+{ "email": "emily.carter@prescrip.com", "password": "doctor1234" }
+
+### Admin login
+POST {{host}}/api/admin/login
+Content-Type: application/json
+
+{ "email": "admin@prescrip.com", "password": "Admin@123" }
+
+### Payment methods
+GET {{host}}/api/user/payment-methods
+
+### My appointments (patient token)
+GET {{host}}/api/user/appointments
+Authorization: Bearer {{userToken}}
+
+### Book appointment (patient token)
+POST {{host}}/api/user/book-appointment
+Authorization: Bearer {{userToken}}
+Content-Type: application/json
+
+{ "doctorId": "paste-doctor-id", "slotDate": "2026-10-01", "slotTime": "10:30" }
+
+### Admin dashboard
+GET {{host}}/api/admin/dashboard
+Authorization: Bearer {{adminToken}}

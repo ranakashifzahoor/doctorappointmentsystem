@@ -1,0 +1,96 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Backend: dev (API :4000)",
+      "type": "shell",
+      "command": "npm run dev",
+      "options": { "cwd": "${workspaceFolder}/backend" },
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": { "group": "dev", "panel": "dedicated", "reveal": "always" }
+    },
+    {
+      "label": "Frontend: dev (patient :5173)",
+      "type": "shell",
+      "command": "npm run dev",
+      "options": { "cwd": "${workspaceFolder}/frontend" },
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": { "group": "dev", "panel": "dedicated", "reveal": "always" }
+    },
+    {
+      "label": "Admin: dev (admin + doctor :5174)",
+      "type": "shell",
+      "command": "npm run dev",
+      "options": { "cwd": "${workspaceFolder}/admin" },
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": { "group": "dev", "panel": "dedicated", "reveal": "always" }
+    },
+    {
+      "label": "Dev: start everything",
+      "dependsOrder": "parallel",
+      "dependsOn": [
+        "Backend: dev (API :4000)",
+        "Frontend: dev (patient :5173)",
+        "Admin: dev (admin + doctor :5174)"
+      ],
+      "problemMatcher": [],
+      "presentation": { "group": "dev", "panel": "shared" }
+    },
+    {
+      "label": "DB: reset + seed demo data",
+      "type": "shell",
+      "command": "npm run db:reset",
+      "options": { "cwd": "${workspaceFolder}/backend" },
+      "problemMatcher": [],
+      "presentation": { "reveal": "always" }
+    },
+    {
+      "label": "Backend: smoke test (51 checks)",
+      "type": "shell",
+      "command": "npm run smoke",
+      "options": { "cwd": "${workspaceFolder}/backend" },
+      "problemMatcher": [],
+      "presentation": { "reveal": "always" }
+    },
+    {
+      "label": "Install: all dependencies",
+      "type": "shell",
+      "command": "npm install",
+      "options": { "cwd": "${workspaceFolder}/backend" },
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "Install: backend",
+        "Install: frontend",
+        "Install: admin"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Install: backend",
+      "type": "shell",
+      "command": "npm install",
+      "options": { "cwd": "${workspaceFolder}/backend" },
+      "problemMatcher": [],
+      "hide": true
+    },
+    {
+      "label": "Install: frontend",
+      "type": "shell",
+      "command": "npm install",
+      "options": { "cwd": "${workspaceFolder}/frontend" },
+      "problemMatcher": [],
+      "hide": true
+    },
+    {
+      "label": "Install: admin",
+      "type": "shell",
+      "command": "npm install",
+      "options": { "cwd": "${workspaceFolder}/admin" },
+      "problemMatcher": [],
+      "hide": true
+    }
+  ]
+}
